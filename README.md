@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌈 Logan.fun — Learning React the Fun Way
 
-## Getting Started
+Welcome to **Logan.fun**, a personal playground of small web experiments and interactive "toys" built by **Logan Whitcomb**.  
+This project exists as a way for me to **test and improve my skills** as I learn **React** and **React Native**, while keeping the process creative and fun.
 
-First, run the development server:
+---
+
+## 🧠 About the Project
+
+Inspired by [neal.fun](https://neal.fun), this site is a growing collection of bite-sized projects that explore ideas through code —  
+sometimes useful, sometimes weird, but always made to learn something new.
+
+> ✨ “Small ideas, built beautifully — and used to get better at coding.”
+
+---
+
+## 🧩 Tech Stack
+
+- **Framework:** [Next.js](https://nextjs.org/)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+- **Language:** TypeScript + React
+- **Animations:** [Framer Motion](https://www.framer.com/motion/)
+- **Hosting:** [Vercel](https://vercel.com/)
+- **Future Learning:** React Native mobile builds
+
+---
+
+## 🚀 Getting Started (Local Setup)
 
 ```bash
+git clone https://github.com/CustomDevv/logan.fun.git
+cd logan.fun
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Then open http://localhost:3000 in your browser.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Each folder inside /app is its own self-contained experiment.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+🧭 Navigation
+Every toy includes a “← Back home” link at the top to return to the main gallery.
+Just add a new folder in /app for your next experiment.
 
-## Learn More
+💡 Goal
+This repo isn’t about perfection — it’s about progress.
+I’m using it to:
 
-To learn more about Next.js, take a look at the following resources:
+Practice React Native concepts in small web projects
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Learn component design and state management
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Build confidence deploying full-stack apps
 
-## Deploy on Vercel
+Keep experimenting and having fun with code
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+🧍‍♂️ Author
+Logan Whitcomb
+🌐 GitHub
+📬 info@thedoghousefl.com
