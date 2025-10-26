@@ -32,6 +32,7 @@ git clone https://github.com/CustomDevv/logan.fun.git
 cd logan.fun
 npm install
 npm run dev
+```
 Then open http://localhost:3000 in your browser.
 
 
