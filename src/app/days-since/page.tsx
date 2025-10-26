@@ -1,5 +1,6 @@
 "use client";
 import { useMemo, useState } from "react";
+import Link from "next/link";
 
 export default function DaysSince() {
   const [date, setDate] = useState<string>("");
@@ -30,6 +31,13 @@ export default function DaysSince() {
           </div>
         ) : <div className="text-zinc-500 text-xl">Pick a date to begin</div>}
       </div>
+      <Link
+  href="/"
+  className="fixed top-5 left-5 bg-zinc-900 border border-zinc-700 px-4 py-2 rounded-full text-sm text-zinc-300 hover:bg-zinc-800"
+>
+  ← Home
+</Link>
+
     </main>
   );
 }

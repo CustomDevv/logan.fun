@@ -1,5 +1,7 @@
 "use client";
 import { useMemo, useState } from "react";
+import Link from "next/link";
+
 
 const YEARS = 90, WEEKS = 52;
 
@@ -38,6 +40,13 @@ export default function LifeWeeks() {
         .grid-cols-26 { display: grid; grid-template-columns: repeat(26, minmax(0, 1fr)); }
         @media(min-width: 768px){ .grid-cols-26{ grid-template-columns: repeat(52, minmax(0, 1fr)); } }
       `}</style>
+      <Link
+  href="/"
+  className="fixed top-5 left-5 bg-zinc-900 border border-zinc-700 px-4 py-2 rounded-full text-sm text-zinc-300 hover:bg-zinc-800"
+>
+  ← Home
+</Link>
+
     </main>
   );
 }
