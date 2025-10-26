@@ -3,6 +3,7 @@ import Link from "next/link";
 const tiles = [
   { href: "/days-since", title: "Days Since…", blurb: "How long since a moment?" },
   { href: "/life-weeks", title: "Life in Weeks", blurb: "Your life as a grid." },
+  { href: "/spend-elon-money", title: "Spend Elon's Money", blurb: "Can you burn through $230 billion?" },
 ];
 
 export default function Home() {
