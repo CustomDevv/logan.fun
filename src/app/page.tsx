@@ -11,6 +11,7 @@ export default function Home() {
   return (
     <main className="min-h-screen max-w-5xl mx-auto p-6">
       <h1 className="text-4xl font-bold mb-6">logan.fun</h1>
+      <Link href="https://github.com/CustomDevv/logan.fun" className="text-zinc-400 mb-8 underline hover:text-blue-600 dark:hover:text-blue-400">Go to Github</Link>
       <p className="text-zinc-400 mb-8">Tiny, playful web experiments. New ones appear over time.</p>
       <div className="grid sm:grid-cols-2 gap-4">
         {tiles.map(t => (
