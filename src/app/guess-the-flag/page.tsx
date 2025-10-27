@@ -77,16 +77,19 @@ export default function GuessTheFlag() {
   }, []);
 
   // prepare a new question
-  function newQuestion() {
-    const pool = shuffle(COUNTRIES);
-    const answer = pool[0];
-    const distractors = shuffle(pool.slice(1, 30)).slice(0, 3);
-    const opts = shuffle([answer, ...distractors]);
-    setCorrect(answer);
-    setChoices(opts);
-    setAnswered(null);
-    setImgKey((k) => k + 1);
-  }
+  const [history, setHistory] = useState<string[]>([]);
+
+function newQuestion() {
+  const pool = shuffle(COUNTRIES);
+  const answer = pool.find(c => !history.includes(c.code)) ?? pool[0];
+  const distractors = shuffle(pool.filter(c => c.code !== answer.code)).slice(0, 3);
+  const opts = shuffle([answer, ...distractors]);
+  setCorrect(answer);
+  setChoices(opts);
+  setAnswered(null);
+  setImgKey(k => k + 1);
+  setHistory(h => [answer.code, ...h].slice(0, 5));
+}
 
   // first load
   useEffect(() => {
