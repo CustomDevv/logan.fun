@@ -1,60 +1,67 @@
-# 🌈 Logan.fun — Learning React the Fun Way
-
-Welcome to **Logan.fun**, a personal playground of small web experiments and interactive "toys" built by **Logan Whitcomb**.  
-This project exists as a way for me to **test and improve my skills** as I learn **React** and **React Native**, while keeping the process creative and fun.
-
----
-
-## 🧠 About the Project
-
-Inspired by [neal.fun](https://neal.fun), this site is a growing collection of bite-sized projects that explore ideas through code —  
-sometimes useful, sometimes weird, but always made to learn something new.
-
-> ✨ “Small ideas, built beautifully — and used to get better at coding.”
+# 🌐 logan.fun  
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Framework](https://img.shields.io/badge/built_with-Next.js_14-blue.svg)](https://nextjs.org/)
+[![Styling](https://img.shields.io/badge/styling-Tailwind_CSS-38bdf8.svg)](https://tailwindcss.com/)
+[![Deploy](https://img.shields.io/badge/hosted_on-Vercel-black.svg)](https://vercel.com/)
+[![GitHub Repo stars](https://img.shields.io/github/stars/CustomDevv/logan.fun?style=social)](https://github.com/CustomDevv/logan.fun/stargazers)
 
 ---
 
-## 🧩 Tech Stack
+### ✨ Tiny, playful web experiments — built just for fun.
 
-- **Framework:** [Next.js](https://nextjs.org/)
-- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
-- **Language:** TypeScript + React
-- **Animations:** [Framer Motion](https://www.framer.com/motion/)
-- **Hosting:** [Vercel](https://vercel.com/)
-- **Future Learning:** React Native mobile builds
+A personal collection of interactive mini-projects exploring creative coding, data visualization, and little curiosities of the web.  
+Everything here is lightweight, open source, and built to make you smile. 😄
 
 ---
 
-## 🚀 Getting Started (Local Setup)
+## 🧩 Experiments
+
+| Project | Description |
+|----------|-------------|
+| [Days Since…](https://logan.fun/days-since) | How long since a moment? |
+| [Life in Weeks](https://logan.fun/life-weeks) | Visualize your life as a grid. |
+| [Spend Elon's Money](https://logan.fun/spend-elon-money) | Can you burn through \$230 billion? |
+| [Guess the Flag](https://logan.fun/guess-the-flag) 🆕 | Can you name the country? |
+| ??? | New experiment in progress 👀 |
+| ??? | New experiment in progress 👀 |
+
+---
+
+## 🧠 Philosophy
+
+> “The web should be fun.”  
+
+logan.fun is a creative sandbox — a space for experiments that don’t need to be *useful* to exist.  
+No ads, no tracking — just code and curiosity.
+
+---
+
+## 🛠️ Built With
+
+- ⚡ **Framework:** [Next.js 14 (App Router)](https://nextjs.org/)
+- 🎨 **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+- ☁️ **Hosting:** [Vercel](https://vercel.com/)
+- 🚩 **Flags:** [flagcdn.com](https://flagcdn.com)
+
+---
+
+## 🚀 Run Locally
 
 ```bash
 git clone https://github.com/CustomDevv/logan.fun.git
 cd logan.fun
 npm install
 npm run dev
+Then open http://localhost:3000 in your browser. ✨
 ```
-Then open http://localhost:3000 in your browser.
 
+📜 License
+This project is open source under the MIT License.
+Free to use, remix, or learn from — attribution appreciated but not required.
 
-Each folder inside /app is its own self-contained experiment.
+👋 About the Creator
+Built by Logan Whitcomb
+🎥 YouTube @CustomDev
+🌐 logan.fun
 
-🧭 Navigation
-Every toy includes a “← Back home” link at the top to return to the main gallery.
-Just add a new folder in /app for your next experiment.
-
-💡 Goal
-This repo isn’t about perfection — it’s about progress.
-I’m using it to:
-
-Practice React Native concepts in small web projects
-
-Learn component design and state management
-
-Build confidence deploying full-stack apps
-
-Keep experimenting and having fun with code
-
-🧍‍♂️ Author
-Logan Whitcomb
-🌐 GitHub
-📬 info@thedoghousefl.com
+“New toys appear over time 🚀”
