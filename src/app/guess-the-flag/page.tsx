@@ -1,12 +1,7 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 
-/**
- * Data source:
- * Using flagcdn.com for images (fast & free).
- * Code = ISO 3166-1 alpha-2 (lowercase).
- */
 type Country = { code: string; name: string };
 
 const COUNTRIES: Country[] = [
@@ -50,6 +45,16 @@ const COUNTRIES: Country[] = [
   { code: "ie", name: "Ireland" },
   { code: "ch", name: "Switzerland" },
   { code: "at", name: "Austria" },
+  { code: "th", name: "Thailand" },
+  { code: "sg", name: "Singapore" },
+  { code: "ph", name: "Philippines" },
+  { code: "vn", name: "Vietnam" },
+  { code: "bd", name: "Bangladesh" },
+  { code: "cl", name: "Chile" },
+  { code: "co", name: "Colombia" },
+  { code: "pe", name: "Peru" },
+  { code: "cz", name: "Czech Republic" },
+  { code: "hu", name: "Hungary" },
 ];
 
 function shuffle<T>(arr: T[]): T[] {
@@ -65,10 +70,20 @@ export default function GuessTheFlag() {
   const [score, setScore] = useState(0);
   const [best, setBest] = useState(0);
   const [round, setRound] = useState(1);
+
   const [answered, setAnswered] = useState<null | string>(null);
   const [correct, setCorrect] = useState<Country | null>(null);
   const [choices, setChoices] = useState<Country[]>([]);
-  const [imgKey, setImgKey] = useState(0); // force image rerender to avoid cache flash
+  const [imgKey, setImgKey] = useState(0);
+
+  const [recent, setRecent] = useState<string[]>([]); // avoid immediate repeats
+  const recentRef = useRef<string[]>([]);
+  useEffect(() => {
+    recentRef.current = recent;
+  }, [recent]);
+
+  const [isPicking, setIsPicking] = useState(false); // prevent rapid double clicks
+  const nextBtnRef = useRef<HTMLButtonElement | null>(null);
 
   // load best from localStorage
   useEffect(() => {
@@ -76,60 +91,104 @@ export default function GuessTheFlag() {
     if (b) setBest(Number(b));
   }, []);
 
-  // prepare a new question
-  const [history, setHistory] = useState<string[]>([]);
+  // Stable question generator (no deps) — reads recent via ref to avoid loops
+  const pickNewAnswer = useCallback(() => {
+    const pool = shuffle(COUNTRIES);
+    const avoid = recentRef.current;
+    const answer = pool.find((c) => !avoid.includes(c.code)) ?? pool[0];
 
-function newQuestion() {
-  const pool = shuffle(COUNTRIES);
-  const answer = pool.find(c => !history.includes(c.code)) ?? pool[0];
-  const distractors = shuffle(pool.filter(c => c.code !== answer.code)).slice(0, 3);
-  const opts = shuffle([answer, ...distractors]);
-  setCorrect(answer);
-  setChoices(opts);
-  setAnswered(null);
-  setImgKey(k => k + 1);
-  setHistory(h => [answer.code, ...h].slice(0, 5));
-}
+    const distractors = shuffle(pool.filter((c) => c.code !== answer.code)).slice(0, 3);
+    const opts = shuffle([answer, ...distractors]);
 
-  // first load
+    setCorrect(answer);
+    setChoices(opts);
+    setAnswered(null);
+    setImgKey((k) => k + 1);
+    setRecent((r) => [answer.code, ...r].slice(0, 5));
+  }, []);
+
+  // first load — run once
   useEffect(() => {
-    newQuestion();
+    pickNewAnswer();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const canNext = useMemo(() => answered !== null, [answered]);
 
-  function pick(option: Country) {
-    if (answered) return;
-    setAnswered(option.code);
-    const isRight = option.code === correct?.code;
-    if (isRight) {
-      const newScore = score + 1;
-      setScore(newScore);
-      if (newScore > best) {
-        setBest(newScore);
-        localStorage.setItem("flag_best_score", String(newScore));
+  // Keyboard controls
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (!correct) return;
+
+      // 1–4 to pick
+      if (!answered && ["1", "2", "3", "4"].includes(e.key)) {
+        const idx = Number(e.key) - 1;
+        const opt = choices[idx];
+        if (opt) handlePick(opt);
+      }
+
+      // Enter/Space to Next
+      if (canNext && (e.key === "Enter" || e.key === " ")) {
+        e.preventDefault();
+        nextRound();
+      }
+
+      // R to reset
+      if (e.key.toLowerCase() === "r") {
+        resetGame();
       }
     }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [answered, choices, correct, canNext]);
+
+  function handlePick(option: Country) {
+    if (answered || isPicking) return;
+    setIsPicking(true);
+    setAnswered(option.code);
+
+    const isRight = option.code === correct?.code;
+    if (isRight) {
+      setScore((s) => {
+        const newScore = s + 1;
+        setBest((b) => {
+          if (newScore > b) {
+            localStorage.setItem("flag_best_score", String(newScore));
+            return newScore;
+          }
+          return b;
+        });
+        return newScore;
+      });
+    }
+
+    // Re-enable shortly (prevents accidental double answers)
+    setTimeout(() => setIsPicking(false), 100);
   }
 
   function nextRound() {
     if (!canNext) return;
     setRound((r) => r + 1);
-    newQuestion();
+    pickNewAnswer();
+    // focus for keyboard users
+    requestAnimationFrame(() => {
+      nextBtnRef.current?.focus();
+    });
   }
 
   function resetGame() {
     setScore(0);
     setRound(1);
     setAnswered(null);
-    newQuestion();
+    setRecent([]);
+    pickNewAnswer();
   }
 
   const imgSrc = correct ? `https://flagcdn.com/w640/${correct.code}.png` : "";
 
   return (
     <main className="min-h-screen bg-black text-white">
-      {/* REQUIRED HOME LINK (as you asked) */}
+      {/* Home link */}
       <Link
         href="/"
         className="fixed top-5 left-5 bg-zinc-900 border border-zinc-700 px-4 py-2 rounded-full text-sm text-zinc-300 hover:bg-zinc-800"
@@ -151,26 +210,32 @@ function newQuestion() {
             <img
               key={imgKey}
               src={imgSrc}
-              alt={`Flag to guess`}
+              alt={`Flag of ${correct.name}`}
               className="w-full h-auto"
-              loading="eager"
+              // Let the browser manage loading; removing eager reduces flicker
+              onError={(e) => {
+                // fallback to SVG if PNG fails
+                (e.currentTarget as HTMLImageElement).src = `https://flagcdn.com/${correct.code}.svg`;
+              }}
             />
           )}
         </div>
 
         {/* Choices */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-6">
-          {choices.map((c) => {
+          {choices.map((c, i) => {
             const isCorrect = answered && c.code === correct?.code;
             const isWrongPick = answered === c.code && !isCorrect;
+            const showIdle = !answered;
+
             return (
               <button
                 key={c.code}
-                onClick={() => pick(c)}
-                disabled={!!answered}
+                onClick={() => handlePick(c)}
+                disabled={!!answered || isPicking}
                 className={[
-                  "text-left px-4 py-3 rounded-xl border transition select-none",
-                  !answered
+                  "text-left px-4 py-3 rounded-xl border transition select-none outline-none focus:ring-2 focus:ring-white/30",
+                  showIdle
                     ? "border-zinc-700 hover:bg-zinc-900"
                     : isCorrect
                     ? "border-green-500 bg-green-900/30"
@@ -178,7 +243,9 @@ function newQuestion() {
                     ? "border-red-500 bg-red-900/30"
                     : "border-zinc-800 bg-zinc-900/30 text-zinc-400",
                 ].join(" ")}
+                aria-label={`Option ${i + 1}: ${c.name}`}
               >
+                <span className="mr-2 text-xs opacity-60">{i + 1}.</span>
                 {c.name}
               </button>
             );
@@ -187,38 +254,56 @@ function newQuestion() {
 
         {/* Feedback + Controls */}
         <div className="mt-6 flex flex-wrap items-center gap-3">
-          {answered && correct && (
-            <div className="text-sm">
-              {answered === correct.code ? (
+          <div className="text-sm" aria-live="polite">
+            {answered && correct ? (
+              answered === correct.code ? (
                 <span className="text-green-400 font-semibold">Correct! </span>
               ) : (
                 <span className="text-red-400 font-semibold">Wrong. </span>
-              )}
-              The flag was <span className="font-semibold">{correct.name}</span>.
-            </div>
-          )}
+              )
+            ) : null}
+            {answered && correct && (
+              <span>
+                The flag was <span className="font-semibold">{correct.name}</span>.
+              </span>
+            )}
+            {!answered && (
+              <span className="text-zinc-400">
+                Pick an answer (1–4). Press{" "}
+                <kbd className="px-1 py-0.5 rounded bg-zinc-800 border border-zinc-700">R</kbd> to reset.
+              </span>
+            )}
+          </div>
 
           <div className="ml-auto flex items-center gap-3">
             <button
               onClick={resetGame}
               className="border border-zinc-700 px-4 py-2 rounded-lg hover:bg-zinc-900 text-sm text-zinc-300"
+              aria-label="Reset game"
             >
               Reset
             </button>
             <button
+              ref={nextBtnRef}
               onClick={nextRound}
               disabled={!canNext}
               className={[
-                "px-4 py-2 rounded-lg text-sm font-semibold",
+                "px-4 py-2 rounded-lg text-sm font-semibold outline-none focus:ring-2 focus:ring-white/30",
                 canNext
                   ? "bg-white text-black hover:opacity-90"
                   : "bg-zinc-800 text-zinc-500 cursor-not-allowed",
               ].join(" ")}
+              aria-disabled={!canNext}
+              aria-label="Next round"
             >
               Next
             </button>
           </div>
         </div>
+
+        <p className="mt-3 text-xs text-zinc-500">
+          Images via flagcdn.com • {COUNTRIES.length} countries in pool
+        </p>
       </section>
     </main>
   );
