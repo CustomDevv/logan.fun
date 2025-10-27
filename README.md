@@ -18,10 +18,10 @@ Everything here is lightweight, open source, and built to make you smile. 😄
 
 | Project | Description |
 |----------|-------------|
-| [Days Since…](https://logan.fun/days-since) | How long since a moment? |
-| [Life in Weeks](https://logan.fun/life-weeks) | Visualize your life as a grid. |
-| [Spend Elon's Money](https://logan.fun/spend-elon-money) | Can you burn through \$230 billion? |
-| [Guess the Flag](https://logan.fun/guess-the-flag) 🆕 | Can you name the country? |
+| [Days Since…](https://logan-fun.vercel.app/days-since) | How long since a moment? |
+| [Life in Weeks](https://logan-fun.vercel.app/life-weeks) | Visualize your life as a grid. |
+| [Spend Elon's Money](https://logan-fun.vercel.app/spend-elon-money) | Can you burn through \$230 billion? |
+| [Guess the Flag](https://logan-fun.vercel.app/guess-the-flag) 🆕 | Can you name the country? |
 | ??? | New experiment in progress 👀 |
 | ??? | New experiment in progress 👀 |
 
@@ -52,16 +52,16 @@ git clone https://github.com/CustomDevv/logan.fun.git
 cd logan.fun
 npm install
 npm run dev
-Then open http://localhost:3000 in your browser. ✨
 ```
+Then open http://localhost:3000 in your browser. ✨
 
-📜 License
+## 📜 License
 This project is open source under the MIT License.
 Free to use, remix, or learn from — attribution appreciated but not required.
 
-👋 About the Creator
+## 👋 About the Creator
 Built by Logan Whitcomb
-🎥 YouTube @CustomDev
-🌐 logan.fun
+🎥 YouTube @CustomDev (https://youtube.com/customdevv)
+🌐 Website (https://logan-fun.vercel.app/)
 
 “New toys appear over time 🚀”
