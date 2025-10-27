@@ -4,7 +4,7 @@ type Tile = { href?: string; title: string; blurb: string; new?: boolean };
 
 const tiles: Tile[] = [
   { href: "/days-since", title: "Days Since…", blurb: "How long since a moment?" },
-  { href: "/life-in-weeks", title: "Life in Weeks", blurb: "Your life as a grid." },
+  { href: "/life-weeks", title: "Life in Weeks", blurb: "Your life as a grid." },
   { href: "/spend-elon-money", title: "Spend Elon's Money", blurb: "Can you burn through $230 billion?" },
   { href: "/guess-the-flag", title: "Guess the Flag", blurb: "Can you name the country?", new: true },
   { title: "???", blurb: "New experiment in progress 👀" },
